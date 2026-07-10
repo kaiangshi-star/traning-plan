@@ -1,6 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>大云进阶培训计划</title>
+  <meta name="description" content="大云进阶培训计划 - HCI 超融合、EDS 分布式存储、aDesk 桌面云课程安排" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0b1220;
+      --card: #141d31;
+      --card-hover: #1b2740;
+      --border: #26324b;
+      --text: #e6edf7;
+      --muted: #8a99b3;
+      --hci: #3b82f6;
+      --eds: #22c55e;
+      --adesk: #f59e0b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 20px;
+      line-height: 1.5;
+    }
+    .container { max-width: 896px; margin: 0 auto; }
+
+    /* Header */
+    header { display: flex; align-items: center; gap: 14px; }
+    .accent-bar {
+      width: 6px; height: 32px; border-radius: 4px;
+      background: linear-gradient(to bottom, var(--hci), var(--eds));
+    }
+    h1 { font-size: 30px; font-weight: 700; letter-spacing: 0.03em; }
+    .subtitle {
+      margin: 12px 0 40px 20px; font-size: 14px; color: var(--muted);
+    }
+
+    /* Category */
+    .category { margin-bottom: 36px; }
+    .cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .tag {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 32px; min-width: 60px; padding: 0 14px; border-radius: 6px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.03em; color: #fff;
+    }
+    .cat-name { font-size: 17px; font-weight: 600; }
+    .cat-count { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+    /* Courses */
+    .courses { display: flex; flex-direction: column; gap: 12px; }
+    .course {
+      display: grid; grid-template-columns: 52px 1fr auto; gap: 20px;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--border); border-left-width: 3px;
+      border-radius: 12px; padding: 16px 24px;
+      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .course:hover {
+      transform: translateY(-2px); background: var(--card-hover);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    }
+    .num { font-size: 24px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+    .info { min-width: 0; }
+    .info-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+    .course-name { font-size: 16px; font-weight: 600; }
+    .date {
+      background: rgba(148, 163, 184, 0.08); border-radius: 6px;
+      padding: 4px 10px; font-size: 12px; color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .desc { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: fit-content; white-space: nowrap;
+      padding: 10px 16px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; color: #fff; text-decoration: none;
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* Theme colors */
+    .hci .tag, .hci .btn { background: var(--hci); }
+    .hci .num { color: var(--hci); }
+    .hci .course { border-left-color: var(--hci); }
+    .eds .tag, .eds .btn { background: var(--eds); }
+    .eds .num { color: var(--eds); }
+    .eds .course { border-left-color: var(--eds); }
+    .adesk .tag, .adesk .btn { background: var(--adesk); }
+    .adesk .num { color: var(--adesk); }
+    .adesk .course { border-left-color: var(--adesk); }
+
+    /* Footer */
+    footer {
+      margin-top: 44px; border-top: 1px solid var(--border); padding-top: 20px;
+      text-align: center; font-size: 13px; color: var(--muted);
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      body { padding: 32px 16px; }
+      h1 { font-size: 24px; }
+      .course { grid-template-columns: 1fr; gap: 12px; }
+      .num { font-size: 20px; }
+    }
+  </style>
+</head>
 <body>
-<h1>测试页面</h1>
+  <div class="container">
+    <header>
+      <span class="accent-bar"></span>
+      <h1>大云进阶培训计划</h1>
+    </header>
+    <p class="subtitle">课程计划 · 点击对应课程按钮即可参加线上培训会议</p>
+
+    <!-- HCI -->
+    <section class="category hci">
+      <div class="cat-head">
+        <span class="tag">HCI</span>
+        <span class="cat-name">超融合</span>
+        <span class="cat-count">2 门课程</span>
+      </div>
+      <div class="courses">
+        <div class="course">
+          <div class="num">01</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">HCI-资源利旧</span>
+              <span class="date">2026.07.20</span>
+            </div>
+            <p class="desc">讲解资源利旧 + 内存分层核心原理，覆盖方案规划、架构设计、部署配置、集群运维及风险管控全流程。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+        <div class="course">
+          <div class="num">02</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">HCI-VMware替换</span>
+              <span class="date">2026.08.04</span>
+            </div>
+            <p class="desc">覆盖替换方案评估规划、虚拟机迁移实施、业务验证割接、风险管控与应急回滚全链路实操。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDS -->
+    <section class="category eds">
+      <div class="cat-head">
+        <span class="tag">EDS</span>
+        <span class="cat-name">分布式存储</span>
+        <span class="cat-count">3 门课程</span>
+      </div>
+      <div class="courses">
+        <div class="course">
+          <div class="num">03</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">EDS 全闪统一存储解决方案</span>
+              <span class="date">2026.07.22</span>
+            </div>
+            <p class="desc">详解全闪统一存储底层原理，硬件选型配置、平台核心功能部署调优指导。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+        <div class="course">
+          <div class="num">04</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">EDS AI &amp; EDA 场景存储解决方案</span>
+              <span class="date">2026.08.06</span>
+            </div>
+            <p class="desc">AI、芯片设计两大解决方案解读，POC 测试与项目交付最佳落地实践。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+        <div class="course">
+          <div class="num">05</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">EDS 大云联合解决方案</span>
+              <span class="date">2026.08.12</span>
+            </div>
+            <p class="desc">EDS 存储 + HCI 超融合 + aDesk 云桌面融合方案讲解。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- aDesk -->
+    <section class="category adesk">
+      <div class="cat-head">
+        <span class="tag">aDesk</span>
+        <span class="cat-name">桌面云</span>
+        <span class="cat-count">3 门课程</span>
+      </div>
+      <div class="courses">
+        <div class="course">
+          <div class="num">06</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">aDesk-Citrix替换场景</span>
+              <span class="date">2026.07.27</span>
+            </div>
+            <p class="desc">对比 aDesk 与 Citrix 架构差异，实操 Citrix 桌面迁移至深信服云平台全流程。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+        <div class="course">
+          <div class="num">07</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">aDesk-资源交付架构场景</span>
+              <span class="date">2026.08.10</span>
+            </div>
+            <p class="desc">讲解 aDesk 资源交付类型、虚拟机分层、接入分层架构及完整身份认证流转原理。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+        <div class="course">
+          <div class="num">08</div>
+          <div class="info">
+            <div class="info-top">
+              <span class="course-name">aDesk- Microsoft AD 域知识精讲</span>
+              <span class="date">2026.08.14</span>
+            </div>
+            <p class="desc">系统讲解 Microsoft AD 域核心知识，详解 aDesk 对接域控的配置规范、关键约束与落地注意事项。</p>
+          </div>
+          <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            点击参加培训会议
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>大云进阶培训计划 · 请将各课程按钮中的链接替换为实际会议地址</footer>
+  </div>
 </body>
 </html>
+
